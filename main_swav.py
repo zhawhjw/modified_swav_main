@@ -196,7 +196,7 @@ def main():
     # optionally resume from a checkpoint
     to_restore = {"epoch": 0}
     restart_from_checkpoint(
-        os.path.join(args.dump_path, "preserved/0.05_lr_noqueue/checkpoint.pth.tar"),
+        os.path.join(args.dump_path, "./checkpoint.pth.tar"),
         run_variables=to_restore,
         state_dict=model,
         optimizer=optimizer,
@@ -245,11 +245,11 @@ def main():
                 save_dict["amp"] = apex.amp.state_dict()
             torch.save(
                 save_dict,
-                os.path.join(args.dump_path, "preserved/0.05_lr_noqueue/checkpoint.pth.tar"),
+                os.path.join(args.dump_path, "./checkpoint.pth.tar"),
             )
             if epoch % args.checkpoint_freq == 0 or epoch == args.epochs - 1:
                 shutil.copyfile(
-                    os.path.join(args.dump_path, "preserved/0.05_lr_noqueue/checkpoint.pth.tar"),
+                    os.path.join(args.dump_path, "./checkpoint.pth.tar"),
                     os.path.join(args.dump_checkpoints, "ckp-" + str(epoch) + ".pth"),
                 )
         if queue is not None:

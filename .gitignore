@@ -1,3 +1,9 @@
 */__pycache__/
 experiments
 preserved/
+checkpoints
+checkpoint.pth.tar
+params.pkl
+queue*.pth
+stats0.pkl
+train.log
