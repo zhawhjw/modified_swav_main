@@ -6,6 +6,8 @@
 #
 
 import argparse
+import datetime
+import sys
 from logging import getLogger
 import pickle
 import os
@@ -57,12 +59,22 @@ def init_distributed_mode(args):
         args.world_size = int(os.environ["WORLD_SIZE"])
 
     # prepare distributed
-    dist.init_process_group(
-        backend="nccl",
-        init_method=args.dist_url,
-        world_size=args.world_size,
-        rank=args.rank,
-    )
+    if sys.platform == 'win32':
+        dist.init_process_group(
+            backend="gloo",
+            init_method=args.dist_url,
+            world_size=args.world_size,
+            timeout=datetime.timedelta(seconds=5),
+            rank=args.rank,
+        )
+    else:
+        # prepare distributed
+        dist.init_process_group(
+            backend="nccl",
+            init_method=args.dist_url,
+            world_size=args.world_size,
+            rank=args.rank,
+        )
 
     # set cuda device
     args.gpu_to_work_on = args.rank % torch.cuda.device_count()

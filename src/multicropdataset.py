@@ -7,11 +7,11 @@
 import random
 from logging import getLogger
 
-from PIL import ImageFilter
+from PIL import ImageFilter,ImageFile
 import numpy as np
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
-
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 logger = getLogger()
 
 
@@ -54,6 +54,7 @@ class MultiCropDataset(datasets.ImageFolder):
 
     def __getitem__(self, index):
         path, _ = self.samples[index]
+        # print(path)
         image = self.loader(path)
         multi_crops = list(map(lambda trans: trans(image), self.trans))
         if self.return_index:

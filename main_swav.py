@@ -74,7 +74,7 @@ parser.add_argument("--epoch_queue_starts", type=int, default=15,
 #########################
 #### optim parameters ###
 #########################
-parser.add_argument("--epochs", default=100, type=int,
+parser.add_argument("--epochs", default=800, type=int,
                     help="number of total epochs to run")
 parser.add_argument("--batch_size", default=64, type=int,
                     help="batch size per gpu, i.e. how many unique instances per gpu")
@@ -196,7 +196,7 @@ def main():
     # optionally resume from a checkpoint
     to_restore = {"epoch": 0}
     restart_from_checkpoint(
-        os.path.join(args.dump_path, "checkpoint.pth.tar"),
+        os.path.join(args.dump_path, "preserved/0.05_lr_noqueue/checkpoint.pth.tar"),
         run_variables=to_restore,
         state_dict=model,
         optimizer=optimizer,
@@ -245,11 +245,11 @@ def main():
                 save_dict["amp"] = apex.amp.state_dict()
             torch.save(
                 save_dict,
-                os.path.join(args.dump_path, "checkpoint.pth.tar"),
+                os.path.join(args.dump_path, "preserved/0.05_lr_noqueue/checkpoint.pth.tar"),
             )
             if epoch % args.checkpoint_freq == 0 or epoch == args.epochs - 1:
                 shutil.copyfile(
-                    os.path.join(args.dump_path, "checkpoint.pth.tar"),
+                    os.path.join(args.dump_path, "preserved/0.05_lr_noqueue/checkpoint.pth.tar"),
                     os.path.join(args.dump_checkpoints, "ckp-" + str(epoch) + ".pth"),
                 )
         if queue is not None:
@@ -377,4 +377,7 @@ def distributed_sinkhorn(out):
 
 
 if __name__ == "__main__":
+    extend_dict = {'MASTER_ADDR': '127.0.0.1', 'MASTER_PORT': '29500', 'WORLD_SIZE': '1', 'RANK': '0',
+                   'LOCAL_RANK': '0'}
+    os.environ.update(extend_dict)
     main()

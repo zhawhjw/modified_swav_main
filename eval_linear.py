@@ -188,7 +188,7 @@ def main():
     # Optionally resume from a checkpoint
     to_restore = {"epoch": 0, "best_acc": 0.}
     restart_from_checkpoint(
-        os.path.join(args.dump_path, "checkpoint.pth.tar"),
+        os.path.join(args.dump_path, "preserved/0.001_lr_noqueue/checkpoint.pth.tar"),
         run_variables=to_restore,
         state_dict=linear_classifier,
         optimizer=optimizer,
@@ -221,7 +221,7 @@ def main():
                 "scheduler": scheduler.state_dict(),
                 "best_acc": best_acc,
             }
-            torch.save(save_dict, os.path.join(args.dump_path, "checkpoint.pth.tar"))
+            torch.save(save_dict, os.path.join(args.dump_path, "preserved/0.001_lr_noqueue/checkpoint.pth.tar"))
     logger.info("Training of the supervised linear classifier on frozen features completed.\n"
                 "Top-1 test accuracy: {acc:.1f}".format(acc=best_acc))
 
