@@ -120,12 +120,12 @@ parser.add_argument("--dump_path", type=str, default=".",
 parser.add_argument("--seed", type=int, default=31, help="seed")
 
 
-def main():
+def main(a, logger, training_stats):
     global args
-    args = parser.parse_args()
-    init_distributed_mode(args)
-    fix_random_seeds(args.seed)
-    logger, training_stats = initialize_exp(args, "epoch", "loss")
+
+    args = a
+
+
 
     # build data
     train_dataset = MultiCropDataset(
@@ -376,8 +376,8 @@ def distributed_sinkhorn(out):
     return Q.t()
 
 
-if __name__ == "__main__":
-    extend_dict = {'MASTER_ADDR': '127.0.0.1', 'MASTER_PORT': '29500', 'WORLD_SIZE': '1', 'RANK': '0',
-                   'LOCAL_RANK': '0'}
-    os.environ.update(extend_dict)
-    main()
+# if __name__ == "__main__":
+#     extend_dict = {'MASTER_ADDR': '127.0.0.1', 'MASTER_PORT': '29500', 'WORLD_SIZE': '1', 'RANK': '0',
+#                    'LOCAL_RANK': '0'}
+#     os.environ.update(extend_dict)
+#     main()

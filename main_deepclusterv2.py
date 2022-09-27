@@ -70,7 +70,7 @@ parser.add_argument("--nmb_prototypes", default=[3000, 3000, 3000], type=int, na
 parser.add_argument("--epochs", default=100, type=int,
                     help="number of total epochs to run")
 parser.add_argument("--batch_size", default=64, type=int,
-                    help="batch size per gpu, i.e. how many unique instances per gpu")
+                    help="batch size per gpu, i.0.6_lr_500_queue_90_qstart_500_prototype. how many unique instances per gpu")
 parser.add_argument("--base_lr", default=4.8, type=float, help="base learning rate")
 parser.add_argument("--final_lr", type=float, default=0, help="final learning rate")
 parser.add_argument("--freeze_prototypes_niters", default=1e10, type=int,

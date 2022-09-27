@@ -61,7 +61,7 @@ parser.add_argument("--pretrained", default="", type=str, help="path to pretrain
 parser.add_argument("--epochs", default=20, type=int,
                     help="number of total epochs to run")
 parser.add_argument("--batch_size", default=32, type=int,
-                    help="batch size per gpu, i.e. how many unique instances per gpu")
+                    help="batch size per gpu, i.0.6_lr_500_queue_90_qstart_500_prototype. how many unique instances per gpu")
 parser.add_argument("--lr", default=0.01, type=float, help="initial learning rate - trunk")
 parser.add_argument("--lr_last_layer", default=0.2, type=float, help="initial learning rate - head")
 parser.add_argument("--decay_epochs", type=int, nargs="+", default=[12, 16],
